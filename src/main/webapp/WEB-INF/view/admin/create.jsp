@@ -1,11 +1,12 @@
-<%@ page import="com.codegym.game_management.entity.Categories" %>
-<%@ page import="java.util.List" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: ntlong
   Date: 19/04/2026
   Time: 09:28 CH
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="com.codegym.game_management.entity.Categories" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String errorMessage = (String) request.getAttribute("errorMessage");

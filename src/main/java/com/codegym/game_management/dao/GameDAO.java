@@ -29,7 +29,7 @@ public class GameDAO extends BaseDAO {
             game.setPrice(resultSet.getDouble("price"));
 
             Categories category = new Categories();
-            game.setId(resultSet.getInt("category_id"));
+            category.setId(resultSet.getInt("category_id"));
             category.setName(resultSet.getString("category_name"));
             game.setCategory(category);
             list.add(game);
@@ -45,7 +45,7 @@ public class GameDAO extends BaseDAO {
         statement.setString(3, description);
         statement.setDouble(4, price);
         statement.setInt(5, category.getId());
-        statement.executeUpdate(sql);
+        statement.executeUpdate();
     }
 
     public void updateById(int id, String name, String image, String description, double price) throws SQLException {

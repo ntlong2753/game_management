@@ -292,7 +292,8 @@
         .list-game-img {
             width: 80px;
             height: 45px;
-            object-fit: cover;
+            object-fit: contain;
+            /*object-fit: cover;*/
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -492,12 +493,12 @@
             <tr>
                 <td class="col-id text-center"><%=game.getId()%></td>
                 <td>
-                    <img src="assets/img/<%= game.getImage()%>" alt="Hình ảnh" class="list-game-img">
+                    <img src="<%=request.getContextPath()%>/<%= game.getImage()%>" alt="Hình ảnh" class="list-game-img">
                 </td>
-                <td class="col-name"><%=game.getName()%>></td>
+                <td class="col-name"><%=game.getName()%></td>
                 <td><span class="badge-category"><%=game.getCategory().getName()%></span></td>
                 <td class="col-desc"><%=game.getDescription()%></td>
-                <td class="col-price"><%=game.getPrice()%></td>
+                <td class="col-price"><%= String.format("%,.0f", game.getPrice()) %> VNĐ</td>
                 <td class="text-center">
                     <div class="action-btns">
                         <!-- Nút Sửa -->

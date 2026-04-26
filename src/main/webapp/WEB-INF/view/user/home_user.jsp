@@ -7,12 +7,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.codegym.game_management.entity.Games" %>
 <%
     // Giả lập lấy danh sách game từ request (Bạn thay đổi Model tương ứng của bạn)
-    // List<Game> gameList = (List<Game>) request.getAttribute("gameList");
+    List<Games> gameList = (List<Games>) request.getAttribute("listGamesUser");
 
     // Biến test giao diện: Đổi thành true để xem trạng thái Rỗng, false để xem danh sách Game
-    boolean isEmpty = false;
+    boolean isEmpty = (gameList == null || gameList.isEmpty());
 %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -250,7 +251,8 @@
         .img-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            /*object-fit: cover;*/
             transition: transform 0.4s ease;
         }
 
@@ -476,8 +478,10 @@
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
 
         <!-- Bắt đầu vòng lặp JSP (for Game game : gameList) -->
-
-        <!-- Card 1 -->
+        <%
+            if (!isEmpty) {
+                for (Games game : gameList) {
+        %>
         <div class="col">
             <!-- Thẻ <a> bao trọn toàn bộ card để người dùng ấn đâu cũng vào được game -->
             <a href="#" class="game-card-link">
@@ -486,73 +490,32 @@
                     <!-- Khu vực Hình ảnh -->
                     <div class="img-container">
                         <!-- ID góc phải trên -->
-                        <span class="badge-id">#01</span>
-                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cyber Strike">
+                        <span class="badge-id"><%= game.getId() %></span>
+                        <img src="<%= request.getContextPath() %>/<%= game.getImage() %>" alt="Hình ảnh">
                         <div class="img-overlay"></div>
                         <!-- Giá tiền góc phải dưới -->
-                        <span class="badge-price">990.000đ</span>
+                        <span class="badge-price"><%= String.format("%,.0f", game.getPrice()) %> VNĐ</span>
                     </div>
 
                     <!-- Khu vực Thông tin -->
                     <div class="info-container">
                         <!-- Thể loại -->
                         <div class="tags-container">
-                            <span class="tag-pill">Hành Động</span>
+                            <span class="tag-pill"><%=game.getCategory().getName()%></span>
                         </div>
                         <!-- Tên Game -->
-                        <h3 class="game-title">Cyber Strike 2077</h3>
+                        <h3 class="game-title"><%=game.getName()%></h3>
                         <!-- Mô tả hiển thị toàn bộ -->
-                        <p class="game-desc">Trải nghiệm tựa game hành động nhập vai lấy bối cảnh thế giới tương lai với đồ họa đỉnh cao. Cốt truyện hấp dẫn kéo dài hàng chục giờ chơi.</p>
+                        <p class="game-desc"><%=game.getDescription()%></p>
                     </div>
 
                 </div>
             </a>
         </div>
-
-        <!-- Card 2 -->
-        <div class="col">
-            <a href="#" class="game-card-link">
-                <div class="game-card">
-                    <div class="img-container">
-                        <span class="badge-id">#02</span>
-                        <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Age of Empires">
-                        <div class="img-overlay"></div>
-                        <span class="badge-price">450.000đ</span>
-                    </div>
-
-                    <div class="info-container">
-                        <div class="tags-container">
-                            <span class="tag-pill">Chiến Thuật</span>
-                        </div>
-                        <h3 class="game-title">Age of Empires IV</h3>
-                        <p class="game-desc">Xây dựng đế chế của riêng bạn, dàn trận và chinh phục thế giới qua các thời kỳ lịch sử hào hùng cùng hàng vạn quân lính.</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="col">
-            <a href="#" class="game-card-link">
-                <div class="game-card">
-                    <div class="img-container">
-                        <span class="badge-id">#03</span>
-                        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="FC Online">
-                        <div class="img-overlay"></div>
-                        <!-- Giá Miễn phí / Đặc biệt -->
-                        <span class="badge-price" style="color: #10b981; border-color: rgba(16, 185, 129, 0.3);">Miễn phí</span>
-                    </div>
-
-                    <div class="info-container">
-                        <div class="tags-container">
-                            <span class="tag-pill">Thể Thao</span>
-                        </div>
-                        <h3 class="game-title">FC Online 2024</h3>
-                        <p class="game-desc">Hóa thân thành nhà quản lý tài ba, điều khiển các siêu sao bóng đá thế giới và giành lấy chiếc cúp vô địch danh giá nhất.</p>
-                    </div>
-                </div>
-            </a>
-        </div>
+        <%
+                }
+            }
+        %>
 
         <!-- Kết thúc vòng lặp JSP -->
 
