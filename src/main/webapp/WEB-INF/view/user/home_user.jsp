@@ -19,7 +19,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PLAYER PORTAL | GAME LIST</title>
+    <title>PLAYER PORTAL</title>
+
+    <!-- Thêm icon trên tab trình duyệt -->
+    <link rel="icon" href="${pageContext.request.contextPath}/image/game1.png" type="image/png">
 
     <!-- Google Fonts: Be Vietnam Pro -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,11 +37,14 @@
     <style>
         :root {
             --bg-dark: #0f172a;
+            --bg-card: #1e293b;
             --user-accent: #f59e0b;
             --user-gradient: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
             --card-glass: rgba(30, 41, 59, 0.7);
-            --nav-glass: rgba(15, 23, 42, 0.8);
+            --nav-glass: rgba(15, 23, 42, 0.85);
             --border-glass: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
         body {
@@ -48,10 +54,10 @@
                     radial-gradient(circle at 15% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
                     radial-gradient(circle at 85% 30%, rgba(234, 88, 12, 0.08) 0%, transparent 40%);
             background-attachment: fixed;
-            color: #f8fafc;
+            color: var(--text-main);
             min-height: 100vh;
             margin: 0;
-            padding-bottom: 3rem;
+            padding-bottom: 4rem;
         }
 
         /* Navbar Glassmorphism */
@@ -100,6 +106,7 @@
             padding: 8px 20px;
             font-weight: 600;
             transition: all 0.3s;
+            text-decoration: none;
         }
 
         .btn-logout:hover {
@@ -111,7 +118,7 @@
         /* Search Bar Styling */
         .search-wrapper {
             max-width: 600px;
-            margin: 0 auto 2.5rem auto;
+            margin: 0 auto 3rem auto;
             position: relative;
             z-index: 10;
         }
@@ -178,130 +185,167 @@
         }
 
         .page-subtitle {
-            color: #94a3b8;
+            color: var(--text-muted);
             font-size: 1.1rem;
         }
 
-        /* ====== BẢNG DANH SÁCH GAME (GLASSMORPHISM TABLE) ====== */
-        .table-glass-wrapper {
-            background: var(--card-glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border-glass);
-            border-radius: 20px;
-            padding: 1rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            overflow-x: auto; /* Cho phép cuộn ngang trên điện thoại */
+        /* ====== SECTION HEADER ====== */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            margin-top: 2rem;
         }
-
-        .table-custom {
-            width: 100%;
-            min-width: 900px; /* Đảm bảo bảng không bị bóp méo quá mức */
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-bottom: 0;
-        }
-
-        .table-custom thead th {
-            background: rgba(15, 23, 42, 0.6);
-            color: var(--user-accent);
-            font-weight: 700;
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 1rem 1.2rem;
-            border-bottom: 2px solid rgba(245, 158, 11, 0.3);
-            font-size: 0.9rem;
+            border-left: 4px solid var(--user-accent);
+            padding-left: 12px;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+        .view-all {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+        }
+        .view-all:hover { color: var(--user-accent); }
+
+        /* ====== GAME CARD (DẠNG Ô THEO YÊU CẦU) ====== */
+        .game-card-link {
+            text-decoration: none;
+            display: block;
+            height: 100%;
         }
 
-        .table-custom thead th:first-child { border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
-        .table-custom thead th:last-child { border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
-
-        .table-custom tbody tr {
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        .game-card {
+            background: transparent;
+            border: none;
+            transition: transform 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
-        .table-custom tbody tr:hover {
-            background: rgba(255, 255, 255, 0.05);
+        .game-card-link:hover .game-card {
+            transform: translateY(-5px);
         }
 
-        .table-custom tbody tr:last-child {
-            border-bottom: none;
+        /* Thumbnail Container */
+        .img-container {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background-color: var(--bg-card);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
         }
 
-        .table-custom td {
-            padding: 1rem 1.2rem;
-            vertical-align: middle;
-            color: #cbd5e1;
-            font-size: 0.95rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Image Column */
-        .list-game-img {
-            width: 80px;
-            height: 45px;
+        .img-container img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .game-card-link:hover .img-container img {
+            transform: scale(1.08); /* Zoom nhẹ ảnh khi hover */
+        }
+
+        /* Lớp Overlay đen mờ viền dưới ảnh để chữ số giá tiền luôn rõ ràng */
+        .img-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        /* Badge ID (Góc trên cùng bên phải) */
+        .badge-id {
+            position: absolute;
+            top: 10px; right: 10px;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 4px 10px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: transform 0.3s;
+            z-index: 2;
         }
 
-        .table-custom tbody tr:hover .list-game-img {
-            transform: scale(1.1);
+        /* Badge Giá Tiền (Góc dưới cùng bên phải) */
+        .badge-price {
+            position: absolute;
+            bottom: 10px; right: 10px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            color: var(--user-accent);
+            font-size: 1.05rem;
+            font-weight: 800;
+            padding: 6px 12px;
+            border-radius: 8px;
+            z-index: 2;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* Text Styling */
-        .col-id { font-weight: 700; color: #94a3b8; width: 60px; }
-        .col-name { font-weight: 700; color: #fff; font-size: 1.05rem; }
+        /* Content phía dưới ảnh */
+        .info-container {
+            padding-top: 12px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Tự động đẩy dài ra nếu mô tả nhiều chữ */
+        }
 
-        .badge-category {
+        /* Thể loại */
+        .tags-container {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .tag-pill {
             background: rgba(245, 158, 11, 0.15);
             color: var(--user-accent);
             border: 1px solid rgba(245, 158, 11, 0.3);
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.8rem;
-        }
-
-        .col-desc {
-            min-width: 250px;
-            max-width: 450px;
-            color: #94a3b8;
-            line-height: 1.6;
-            white-space: normal; /* Cho phép chữ tự động xuống dòng */
-            word-wrap: break-word; /* Ngăn các từ quá dài làm vỡ bảng */
-        }
-
-        .col-price {
+            font-size: 0.75rem;
             font-weight: 700;
-            color: #10b981; /* Màu xanh lá cho giá tiền */
-            font-size: 1.05rem;
+            padding: 4px 12px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        /* Action Button */
-        .btn-action-sm {
-            background: var(--user-gradient);
-            border: none;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
+        /* Tên Game */
+        .game-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.4;
+            margin: 0 0 8px 0;
+            transition: color 0.3s;
         }
 
-        .btn-action-sm:hover {
-            filter: brightness(1.1);
-            box-shadow: 0 5px 15px rgba(234, 88, 12, 0.4);
-            color: white;
-            transform: translateY(-2px);
+        .game-card-link:hover .game-title {
+            color: var(--user-accent);
+        }
+
+        /* Mô tả (Hiện toàn bộ, không giới hạn dòng) */
+        .game-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+            white-space: normal;
         }
 
         /* Empty State Styling */
@@ -332,7 +376,7 @@
         }
 
         .empty-desc {
-            color: #94a3b8;
+            color: var(--text-muted);
             margin-bottom: 2rem;
             max-width: 400px;
             margin-left: auto;
@@ -382,7 +426,7 @@
                     <span class="text-white ms-3 me-2"><i class="bi bi-person-circle"></i> Xin chào, User!</span>
                 </li>
                 <li class="nav-item">
-                    <a href="${pageContext.request.contextPath}/game-management/user/login" class="btn btn-logout text-decoration-none">
+                    <a href="${pageContext.request.contextPath}/game-management/user/login" class="btn btn-logout">
                         <i class="bi bi-box-arrow-right"></i> Đăng xuất
                     </a>
                 </li>
@@ -398,94 +442,120 @@
         <p class="page-subtitle">Tìm kiếm, lựa chọn và đắm chìm vào những tựa game đỉnh cao nhất</p>
     </div>
 
-    <!-- ====== THANH TÌM KIẾM (SEARCH BAR) ====== -->
+    <!-- ====== THANH TÌM KIẾM ====== -->
     <div class="search-wrapper">
         <form action="${pageContext.request.contextPath}/game-management/user/search" method="GET" class="d-flex">
-            <input type="text" name="keyword" class="form-control search-input" placeholder="Nhập tên game cần tìm..." aria-label="Search">
+            <input type="text" name="keyword" class="form-control search-input" placeholder="Nhập tên game cần tìm..." aria-label="Search" autocomplete="off">
             <button class="btn btn-search" type="submit">
                 <i class="bi bi-search me-1"></i> Tìm
             </button>
         </form>
     </div>
 
-    <% if (isEmpty) { // Logic kiểm tra mảng rỗng %>
+    <% if (isEmpty) { %>
 
-    <!-- ====== TRẠNG THÁI RỖNG (EMPTY STATE) ====== -->
+    <!-- ====== TRẠNG THÁI RỖNG ====== -->
     <div class="empty-state">
         <i class="bi bi-ghost empty-icon"></i>
         <h3 class="empty-title">Danh sách game đang trống</h3>
         <p class="empty-desc">Hiện tại hệ thống chưa có tựa game nào được ra mắt. Vui lòng quay lại sau hoặc làm mới trang.</p>
-        <a href="#" class="btn btn-refresh">
+        <a href="${pageContext.request.contextPath}/game-management/user/home" class="btn btn-refresh">
             <i class="bi bi-arrow-clockwise"></i> Làm mới
         </a>
     </div>
 
     <% } else { %>
 
-    <!-- ====== TRẠNG THÁI DANH SÁCH (TABLE LIST VIEW) ====== -->
-    <div class="table-glass-wrapper">
-        <table class="table-custom">
-            <thead>
-            <tr>
-                <th class="text-center">ID</th>
-                <th>Hình Ảnh</th>
-                <th>Tên Game</th>
-                <th>Thể Loại</th>
-                <th>Mô Tả</th>
-                <th>Giá</th>
-            </tr>
-            </thead>
-            <tbody>
+    <!-- ====== SECTION: KHÁM PHÁ GAME ====== -->
+    <div class="section-header">
+        <h2 class="section-title">Khám Phá Game</h2>
+        <a href="#" class="view-all">Xem tất cả <i class="bi bi-arrow-right"></i></a>
+    </div>
 
-            <!-- Bắt đầu vòng lặp JSP ở đây (VD: for(Game game : gameList) { ) -->
+    <!-- ====== DANH SÁCH GAME (GRID CARDS) ====== -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
 
-            <!-- Row 1 -->
-            <tr>
-                <td class="col-id text-center">#01</td>
-                <td>
-                    <!-- Bạn thay bằng URL thật từ object game.getImage() -->
-                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cyber Strike" class="list-game-img">
-                </td>
-                <td class="col-name">Cyber Strike 2077</td>
-                <td><span class="badge-category">Hành Động</span></td>
-                <td class="col-desc">
-                    Trải nghiệm tựa game hành động nhập vai lấy bối cảnh thế giới tương lai với đồ họa đỉnh cao. Cốt truyện hấp dẫn kéo dài hàng chục giờ chơi.
-                </td>
-                <td class="col-price">990.000đ</td>
-            </tr>
+        <!-- Bắt đầu vòng lặp JSP (for Game game : gameList) -->
 
-            <!-- Row 2 -->
-            <tr>
-                <td class="col-id text-center">#02</td>
-                <td>
-                    <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Age of Empires" class="list-game-img">
-                </td>
-                <td class="col-name">Age of Empires IV</td>
-                <td><span class="badge-category">Chiến Thuật</span></td>
-                <td class="col-desc">
-                    Xây dựng đế chế của riêng bạn, dàn trận và chinh phục thế giới qua các thời kỳ lịch sử hào hùng cùng hàng vạn quân lính.
-                </td>
-                <td class="col-price">450.000đ</td>
-            </tr>
+        <!-- Card 1 -->
+        <div class="col">
+            <!-- Thẻ <a> bao trọn toàn bộ card để người dùng ấn đâu cũng vào được game -->
+            <a href="#" class="game-card-link">
+                <div class="game-card">
 
-            <!-- Row 3 -->
-            <tr>
-                <td class="col-id text-center">#03</td>
-                <td>
-                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="FC Online" class="list-game-img">
-                </td>
-                <td class="col-name">FC Online 2024</td>
-                <td><span class="badge-category">Thể Thao</span></td>
-                <td class="col-desc">
-                    Hóa thân thành nhà quản lý tài ba, điều khiển các siêu sao bóng đá thế giới và giành lấy chiếc cúp vô địch danh giá nhất.
-                </td>
-                <td class="col-price">Miễn phí</td>
-            </tr>
+                    <!-- Khu vực Hình ảnh -->
+                    <div class="img-container">
+                        <!-- ID góc phải trên -->
+                        <span class="badge-id">#01</span>
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cyber Strike">
+                        <div class="img-overlay"></div>
+                        <!-- Giá tiền góc phải dưới -->
+                        <span class="badge-price">990.000đ</span>
+                    </div>
 
-            <!-- Kết thúc vòng lặp JSP ở đây -->
+                    <!-- Khu vực Thông tin -->
+                    <div class="info-container">
+                        <!-- Thể loại -->
+                        <div class="tags-container">
+                            <span class="tag-pill">Hành Động</span>
+                        </div>
+                        <!-- Tên Game -->
+                        <h3 class="game-title">Cyber Strike 2077</h3>
+                        <!-- Mô tả hiển thị toàn bộ -->
+                        <p class="game-desc">Trải nghiệm tựa game hành động nhập vai lấy bối cảnh thế giới tương lai với đồ họa đỉnh cao. Cốt truyện hấp dẫn kéo dài hàng chục giờ chơi.</p>
+                    </div>
 
-            </tbody>
-        </table>
+                </div>
+            </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col">
+            <a href="#" class="game-card-link">
+                <div class="game-card">
+                    <div class="img-container">
+                        <span class="badge-id">#02</span>
+                        <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Age of Empires">
+                        <div class="img-overlay"></div>
+                        <span class="badge-price">450.000đ</span>
+                    </div>
+
+                    <div class="info-container">
+                        <div class="tags-container">
+                            <span class="tag-pill">Chiến Thuật</span>
+                        </div>
+                        <h3 class="game-title">Age of Empires IV</h3>
+                        <p class="game-desc">Xây dựng đế chế của riêng bạn, dàn trận và chinh phục thế giới qua các thời kỳ lịch sử hào hùng cùng hàng vạn quân lính.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col">
+            <a href="#" class="game-card-link">
+                <div class="game-card">
+                    <div class="img-container">
+                        <span class="badge-id">#03</span>
+                        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="FC Online">
+                        <div class="img-overlay"></div>
+                        <!-- Giá Miễn phí / Đặc biệt -->
+                        <span class="badge-price" style="color: #10b981; border-color: rgba(16, 185, 129, 0.3);">Miễn phí</span>
+                    </div>
+
+                    <div class="info-container">
+                        <div class="tags-container">
+                            <span class="tag-pill">Thể Thao</span>
+                        </div>
+                        <h3 class="game-title">FC Online 2024</h3>
+                        <p class="game-desc">Hóa thân thành nhà quản lý tài ba, điều khiển các siêu sao bóng đá thế giới và giành lấy chiếc cúp vô địch danh giá nhất.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Kết thúc vòng lặp JSP -->
+
     </div>
 
     <% } %>

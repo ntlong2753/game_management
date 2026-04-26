@@ -31,14 +31,16 @@ public class HomeAdminController extends HttpServlet {
             case "/":
                 try {
                     gameServices.renderPageGames(request, response);
-                } catch (ServiceException e) {
-                    throw new RuntimeException(e);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
                 break;
             case "/create":
-                request.getRequestDispatcher("/WEB-INF/view/admin/create.jsp").forward(request, response);
+                try {
+                    gameServices.renderFormCreate(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case "/edit":
                 request.getRequestDispatcher("/WEB-INF/view/admin/edit.jsp").forward(request, response);
@@ -54,7 +56,11 @@ public class HomeAdminController extends HttpServlet {
         }
         switch (pathInfo) {
             case "/create":
-                request.getRequestDispatcher("/WEB-INF/view/admin/create.jsp").forward(request, response);
+                try {
+                    gameServices.createGame(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case "/edit":
                 request.getRequestDispatcher("/WEB-INF/view/admin/edit.jsp").forward(request, response);

@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAME PORTAL EVOLUTION | PREMIUM</title>
 
+    <!-- Thêm icon trên tab trình duyệt -->
+    <link rel="icon" href="${pageContext.request.contextPath}/image/management.png" type="image/png">
+
     <!-- Google Fonts: Be Vietnam Pro -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

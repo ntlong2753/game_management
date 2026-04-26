@@ -37,13 +37,14 @@ public class GameDAO extends BaseDAO {
         return list;
     }
 
-    public void create(String name, String image, String description, double price) throws SQLException {
-        String sql = "INSERT INTO games(name, image, description, price) VALUES (?, ?, ?, ?)";
+    public void create(String name, String image, String description, double price, Categories category) throws SQLException {
+        String sql = "INSERT INTO games(name, image, description, price, category_id) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement statement = connect.prepareStatement(sql);
         statement.setString(1, name);
         statement.setString(2, image);
         statement.setString(3, description);
         statement.setDouble(4, price);
+        statement.setInt(5, category.getId());
         statement.executeUpdate(sql);
     }
 

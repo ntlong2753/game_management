@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.codegym.game_management.entity.Categories" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: ntlong
   Date: 19/04/2026
@@ -9,6 +10,7 @@
 <%
     String errorMessage = (String) request.getAttribute("errorMessage");
     String successMessage = (String) request.getAttribute("successMessage");
+    List<Categories> categoryList = (List<Categories>) request.getAttribute("categoryCreateGame");
 %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -16,6 +18,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADMIN PORTAL | ADD NEW GAME</title>
+
+    <!-- Thêm icon trên tab trình duyệt -->
+    <link rel="icon" href="${pageContext.request.contextPath}/image/adminGame.png" type="image/png">
 
     <!-- Google Fonts: Be Vietnam Pro -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -340,7 +345,9 @@
                     <label for="category" class="form-label">Thể Loại <span class="text-danger">*</span></label>
                     <select class="form-select" id="category" name="category" required>
                         <option value="" disabled selected>-- Chọn thể loại --</option>
-
+                        <% for (Categories category : categoryList) { %>
+                            <option value="<%= category.getId() %>"><%= category.getName() %></option>
+                        <% } %>
                     </select>
                 </div>
 
