@@ -24,7 +24,8 @@ public class Database {
             e.printStackTrace();
         } catch (Exception e) {
             System.out.println("Connection failed!");
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return null;
         }
         return connection;
     }
