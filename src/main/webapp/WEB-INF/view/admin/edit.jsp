@@ -1,4 +1,6 @@
-<%--
+<%@ page import="com.codegym.game_management.entity.Games" %>
+<%@ page import="com.codegym.game_management.entity.Categories" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: ntlong
   Date: 19/04/2026
@@ -10,8 +12,10 @@
     String errorMessage = (String) request.getAttribute("errorMessage");
     String successMessage = (String) request.getAttribute("successMessage");
 
+    List<Categories> categoryList = (List<Categories>) request.getAttribute("categoryUpdateGame");
+
     // Giả sử Controller truyền vào một object "game" chứa thông tin cần sửa
-    // Game game = (Game) request.getAttribute("game");
+    Games game = (Games) request.getAttribute("gameEdit");
 %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -359,14 +363,14 @@
         <form action="${pageContext.request.contextPath}/home-admin/edit" method="post" enctype="multipart/form-data">
 
             <!-- TRƯỜNG ẨN: Truyền ID của Game cần sửa -->
-            <input type="hidden" name="id" value="${game.id}">
+            <input type="hidden" name="id" value="<%=game.getId()%>">
 
             <div class="row g-4">
                 <!-- Tên Game -->
                 <div class="col-md-6">
                     <label for="name" class="form-label">Tên Game <span class="text-danger">*</span></label>
                     <!-- Thêm thuộc tính value="${game.name}" để render lại tên cũ -->
-                    <input type="text" class="form-control" id="name" name="name" value="${game.name}" placeholder="Nhập tên trò chơi..." required autocomplete="off">
+                    <input type="text" class="form-control" id="name" name="name" value="<%=game.getName()%>" placeholder="Nhập tên trò chơi..." required autocomplete="off">
                 </div>
 
                 <!-- Thể Loại -->
@@ -375,12 +379,9 @@
                     <!-- Dùng biểu thức điều kiện để selected thể loại cũ của game -->
                     <select class="form-select" id="category" name="category" required>
                         <option value="" disabled>-- Chọn thể loại --</option>
-                        <option value="Hành Động" ${game.category == 'Hành Động' ? 'selected' : ''}>Hành Động</option>
-                        <option value="Chiến Thuật" ${game.category == 'Chiến Thuật' ? 'selected' : ''}>Chiến Thuật</option>
-                        <option value="Nhập Vai (RPG)" ${game.category == 'Nhập Vai (RPG)' ? 'selected' : ''}>Nhập Vai (RPG)</option>
-                        <option value="Thể Thao" ${game.category == 'Thể Thao' ? 'selected' : ''}>Thể Thao</option>
-                        <option value="Giải Đố" ${game.category == 'Giải Đố' ? 'selected' : ''}>Giải Đố</option>
-                        <option value="Kinh Dị" ${game.category == 'Kinh Dị' ? 'selected' : ''}>Kinh Dị</option>
+                        <% for (Categories category : categoryList) { %>
+                        <option value="<%= category.getId() %>"><%= category.getName() %></option>
+                        <% } %>
                     </select>
                 </div>
 
@@ -388,7 +389,7 @@
                 <div class="col-md-6">
                     <label for="price" class="form-label">Giá tiền (VNĐ) <span class="text-danger">*</span></label>
                     <div class="input-group">
-                        <input type="number" class="form-control" id="price" name="price" value="${game.price}" placeholder="VD: 500000" min="0" required>
+                        <input type="number" class="form-control" id="price" name="price" value="<%=game.getPrice()%>" placeholder="VD: 500000" min="0" required>
                         <span class="input-group-text bg-dark text-white border-secondary">VNĐ</span>
                     </div>
                 </div>
@@ -405,7 +406,7 @@
                 <div class="col-12">
                     <label for="description" class="form-label">Mô tả chi tiết</label>
                     <!-- Textarea không có thuộc tính value, dữ liệu để vào giữa cặp thẻ -->
-                    <textarea class="form-control" id="description" name="description" rows="4" placeholder="Nhập mô tả về game...">${game.description}</textarea>
+                    <textarea class="form-control" id="description" name="description" rows="4" placeholder="Nhập mô tả về game..."><%=game.getDescription()%></textarea>
                 </div>
             </div>
 

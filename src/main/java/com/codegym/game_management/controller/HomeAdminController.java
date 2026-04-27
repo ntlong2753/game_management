@@ -43,7 +43,11 @@ public class HomeAdminController extends HttpServlet {
                 }
                 break;
             case "/edit":
-                request.getRequestDispatcher("/WEB-INF/view/admin/edit.jsp").forward(request, response);
+                try {
+                    gameServices.renderFormUpdate(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
 
         }
@@ -63,7 +67,11 @@ public class HomeAdminController extends HttpServlet {
                 }
                 break;
             case "/edit":
-                request.getRequestDispatcher("/WEB-INF/view/admin/edit.jsp").forward(request, response);
+                try {
+                    gameServices.updateGame(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
         }
     }

@@ -12,6 +12,7 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -73,6 +74,58 @@ public class GameServices {
                 newGame.getPrice(),
                 newGame.getCategory()
         );
+        response.sendRedirect(request.getContextPath() + "/home-admin");
+    }
+
+    public static void renderFormUpdate(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException {
+        List<Categories> categories = CATEGORY_DAO.getAllCategory();
+        int id = Integer.parseInt(request.getParameter("id"));
+        Games gameEdit = GAME_DAO.getById(id);
+        if (gameEdit != null) {
+            request.setAttribute("gameEdit", gameEdit);
+            request.setAttribute("categoryUpdateGame", categories);
+            request.getRequestDispatcher("/WEB-INF/view/admin/edit.jsp").forward(request, response);
+        } else {
+            // Nếu không tìm thấy game, báo lỗi hoặc về trang chủ
+            response.sendRedirect(request.getContextPath() + "/home-admin?error=notfound");
+        }
+    }
+
+    public static void updateGame(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException{
+        String id = request.getParameter("id");
+
+        String oldImage = request.getParameter("oldImage"); // Lấy lại đường dẫn cũ
+        Part filePart = request.getPart("image");
+        String fileName = filePart.getSubmittedFileName();
+        String finalImagePath;
+
+        if (fileName != null && !fileName.isEmpty()) {
+            // TRƯỜNG HỢP 1: Người dùng có chọn ảnh mới
+            // Làm sạch tên file như bạn muốn (Paths.get...)
+            String safeFileName = Paths.get(fileName).getFileName().toString();
+            String uploadPath = "D:/Du_lieu/CodeGym/Module_3/game_management/src/main/webapp/image_save";
+
+            filePart.write(uploadPath + File.separator + safeFileName);
+            finalImagePath = "image_save/" + safeFileName;
+
+            // (Tùy chọn) Xóa file ảnh cũ trên ổ đĩa để dọn rác
+            File oldFile = new File("D:/Du_lieu/.../webapp/" + oldImage);
+            if(oldFile.exists()) oldFile.delete();
+
+        } else {
+            // TRƯỜNG HỢP 2: Người dùng không chọn ảnh, giữ nguyên ảnh cũ
+            finalImagePath = oldImage;
+        }
+
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        double price = Double.parseDouble(request.getParameter("price"));
+        int categoryId = Integer.parseInt(request.getParameter("category"));
+        Categories category = new Categories();
+        category.setId(categoryId);
+        GAME_DAO.update(Integer.parseInt(id), name, finalImagePath, description, price, category);
         response.sendRedirect(request.getContextPath() + "/home-admin");
     }
 }
