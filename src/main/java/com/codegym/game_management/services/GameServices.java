@@ -13,8 +13,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 import static jdk.jpackage.internal.IOUtils.getFileName;
 
@@ -127,5 +130,36 @@ public class GameServices {
         category.setId(categoryId);
         GAME_DAO.update(Integer.parseInt(id), name, finalImagePath, description, price, category);
         response.sendRedirect(request.getContextPath() + "/home-admin");
+    }
+
+    public static void deleteGame(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException {
+        String id = request.getParameter("id");
+        GAME_DAO.delete(Integer.parseInt(id));
+        response.sendRedirect(request.getContextPath() + "/home-admin");
+    }
+
+    public static void searchGame(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException {
+        String keyword = request.getParameter("keyword");
+        List<Games> result = new ArrayList<>();
+        ResultSet resultSet = GAME_DAO.search(keyword);
+        while (resultSet.next()) {
+            Games game = new Games();
+            game.setId(resultSet.getInt("id"));
+            game.setName(resultSet.getString("name"));
+            game.setImage(resultSet.getString("image"));
+            game.setDescription(resultSet.getString("description"));
+            game.setPrice(resultSet.getDouble("price"));
+
+            Categories category = new Categories();
+            category.setId(resultSet.getInt("category_id"));
+            category.setName(resultSet.getString("category_name"));
+            game.setCategory(category);
+            result.add(game);
+        }
+        System.out.println(result);
+        request.setAttribute("game", result);
+        request.getRequestDispatcher("/WEB-INF/view/admin/home.jsp").forward(request, response);
     }
 }

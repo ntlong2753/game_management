@@ -49,6 +49,20 @@ public class HomeAdminController extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 break;
+            case "/delete":
+                try {
+                    gameServices.deleteGame(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case "/search":
+                try {
+                    gameServices.searchGame(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
 
         }
     }

@@ -446,7 +446,7 @@
 
     <!-- ====== THANH TÌM KIẾM ====== -->
     <div class="search-wrapper">
-        <form action="${pageContext.request.contextPath}/game-management/user/search" method="GET" class="d-flex">
+        <form action="${pageContext.request.contextPath}/home-user/search" method="GET" class="d-flex">
             <input type="text" name="keyword" class="form-control search-input" placeholder="Nhập tên game cần tìm..." aria-label="Search" autocomplete="off">
             <button class="btn btn-search" type="submit">
                 <i class="bi bi-search me-1"></i> Tìm
@@ -471,7 +471,7 @@
     <!-- ====== SECTION: KHÁM PHÁ GAME ====== -->
     <div class="section-header">
         <h2 class="section-title">Khám Phá Game</h2>
-        <a href="#" class="view-all">Xem tất cả <i class="bi bi-arrow-right"></i></a>
+        <a href="/home-user/" class="view-all">Xem tất cả <i class="bi bi-arrow-right"></i></a>
     </div>
 
     <!-- ====== DANH SÁCH GAME (GRID CARDS) ====== -->

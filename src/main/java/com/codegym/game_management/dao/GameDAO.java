@@ -87,9 +87,20 @@ public class GameDAO extends BaseDAO {
         return null;
     }
 
+    public void delete(int id) throws SQLException {
+        String sql = "DELETE FROM games WHERE id = ?";
+        PreparedStatement statement = connect.prepareStatement(sql);
+        statement.setInt(1, id);
+        statement.executeUpdate();
+    }
+
     public ResultSet search(String keyword) throws SQLException {
-        String sql = "SELECT * FROM user WHERE username LIKE '%" + keyword + "%'";
-        Statement statement = connect.prepareStatement(sql);
-        return statement.executeQuery(sql);
+        String sql = "SELECT games.*, categories.name AS category_name " +
+                "FROM games " +
+                "JOIN categories ON games.category_id = categories.id " +
+                "WHERE games.name LIKE ?";
+        PreparedStatement statement = connect.prepareStatement(sql);
+        statement.setString(1, "%" + keyword + "%");
+        return statement.executeQuery();
     }
 }
