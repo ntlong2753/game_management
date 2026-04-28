@@ -51,19 +51,12 @@ public class CategoryServices {
     }
 
     public static void searchCategory(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
+            throws SQLException, IOException, ServletException {
         String keyword = request.getParameter("keyword");
-         List<Categories> resultSearch =new ArrayList<>();
-        ResultSet resultSet = CATEGORY_DAO.search(keyword);
-        while (resultSet.next()) {
-            Categories category = new Categories();
-            category.setId(resultSet.getInt("id"));
-            category.setName(resultSet.getString("name"));
-            resultSearch.add(category);
-        }
+        List<Categories> resultSearch = CATEGORY_DAO.search(keyword);
         System.out.println(resultSearch.size());
         System.out.println(resultSearch);
         request.setAttribute("category", resultSearch);
-        response.sendRedirect(request.getContextPath() + "/home-admin/category");
+        request.getRequestDispatcher("/WEB-INF/view/category/category.jsp").forward(request, response);
     }
 }

@@ -138,24 +138,11 @@ public class GameServices {
     public static void searchGame(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         String keyword = request.getParameter("keyword");
-        List<Games> result = new ArrayList<>();
-        ResultSet resultSet = GAME_DAO.search(keyword);
-        while (resultSet.next()) {
-            Games game = new Games();
-            game.setId(resultSet.getInt("id"));
-            game.setName(resultSet.getString("name"));
-            game.setImage(resultSet.getString("image"));
-            game.setDescription(resultSet.getString("description"));
-            game.setPrice(resultSet.getDouble("price"));
 
-            Categories category = new Categories();
-            category.setId(resultSet.getInt("category_id"));
-            category.setName(resultSet.getString("category_name"));
-            game.setCategory(category);
-            result.add(game);
-        }
-        System.out.println(result);
-        request.setAttribute("game", result);
+        List<Games> resultSet = GAME_DAO.search(keyword);
+
+        System.out.println(resultSet);
+        request.setAttribute("game", resultSet);
         request.getRequestDispatcher("/WEB-INF/view/admin/home.jsp").forward(request, response);
     }
 }

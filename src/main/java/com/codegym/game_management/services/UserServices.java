@@ -37,22 +37,7 @@ public class UserServices {
     public static void searchGameUser (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         String keyword = request.getParameter("keyword");
-        List<Games> result = new ArrayList<>();
-        ResultSet resultSet = GAME_DAO.search(keyword);
-        while (resultSet.next()) {
-            Games game = new Games();
-            game.setId(resultSet.getInt("id"));
-            game.setName(resultSet.getString("name"));
-            game.setImage(resultSet.getString("image"));
-            game.setDescription(resultSet.getString("description"));
-            game.setPrice(resultSet.getDouble("price"));
-
-            Categories category = new Categories();
-            category.setId(resultSet.getInt("category_id"));
-            category.setName(resultSet.getString("category_name"));
-            game.setCategory(category);
-            result.add(game);
-        }
+        List<Games> result = GAME_DAO.search(keyword);
         System.out.println(result);
         request.setAttribute("listGamesUser", result);
         request.getRequestDispatcher("/WEB-INF/view/user/home_user.jsp").forward(request, response);

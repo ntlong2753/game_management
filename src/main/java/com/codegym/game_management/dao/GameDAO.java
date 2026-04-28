@@ -93,13 +93,29 @@ public class GameDAO extends BaseDAO {
         statement.executeUpdate();
     }
 
-    public ResultSet search(String keyword) throws SQLException {
+    public List<Games> search(String keyword) throws SQLException {
         String sql = "SELECT games.*, categories.name AS category_name " +
                 "FROM games " +
                 "JOIN categories ON games.category_id = categories.id " +
                 "WHERE games.name LIKE ?";
         PreparedStatement statement = connect.prepareStatement(sql);
         statement.setString(1, "%" + keyword + "%");
-        return statement.executeQuery();
+        ResultSet resultSet = statement.executeQuery();
+        List<Games> list = new ArrayList<>();
+        while (resultSet.next()) {
+            Games game = new Games();
+            game.setId(resultSet.getInt("id"));
+            game.setName(resultSet.getString("name"));
+            game.setImage(resultSet.getString("image"));
+            game.setDescription(resultSet.getString("description"));
+            game.setPrice(resultSet.getDouble("price"));
+
+            Categories category = new Categories();
+            category.setId(resultSet.getInt("category_id"));
+            category.setName(resultSet.getString("category_name"));
+            game.setCategory(category);
+            list.add(game);
+        }
+        return list;
     }
 }

@@ -58,15 +58,15 @@ public class CategoryDAO extends BaseDAO {
     public Categories getById(int id) throws SQLException {
         String sql = "SELECT * FROM categories WHERE id = ?";
         PreparedStatement statement = connect.prepareStatement(sql);
-            statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    Categories category = new Categories();
-                    category.setId(resultSet.getInt("id"));
-                    category.setName(resultSet.getString("name"));
-                    return category;
-                }
+        statement.setInt(1, id);
+        try (ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                Categories category = new Categories();
+                category.setId(resultSet.getInt("id"));
+                category.setName(resultSet.getString("name"));
+                return category;
             }
+        }
 
         return null; // Trả về null nếu không tìm thấy ID
     }
@@ -78,10 +78,19 @@ public class CategoryDAO extends BaseDAO {
         statement.executeUpdate();
     }
 
-    public ResultSet search(String keyword) throws SQLException {
+    public List<Categories> search(String keyword) throws SQLException {
+        List<Categories> list = new ArrayList<>();
         String sql = "SELECT * FROM categories WHERE name LIKE ?";
         PreparedStatement statement = connect.prepareStatement(sql);
         statement.setString(1, "%" + keyword + "%");
-        return statement.executeQuery();
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            Categories category = new Categories();
+            category.setId(resultSet.getInt("id"));
+            category.setName(resultSet.getString("name"));
+            list.add(category);
+        }
+        return list;
     }
 }
+

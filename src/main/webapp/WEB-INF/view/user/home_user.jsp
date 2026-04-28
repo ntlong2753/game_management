@@ -410,7 +410,7 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/home-user/">
             <i class="bi bi-controller"></i> GamePortal
         </a>
         <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-bs-target="#navbarNav">
@@ -461,7 +461,7 @@
         <i class="bi bi-ghost empty-icon"></i>
         <h3 class="empty-title">Danh sách game đang trống</h3>
         <p class="empty-desc">Hiện tại hệ thống chưa có tựa game nào được ra mắt. Vui lòng quay lại sau hoặc làm mới trang.</p>
-        <a href="${pageContext.request.contextPath}/game-management/user/home" class="btn btn-refresh">
+        <a href="${pageContext.request.contextPath}/home-user/" class="btn btn-refresh">
             <i class="bi bi-arrow-clockwise"></i> Làm mới
         </a>
     </div>
