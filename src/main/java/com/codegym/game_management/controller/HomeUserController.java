@@ -1,7 +1,5 @@
 package com.codegym.game_management.controller;
 
-import com.codegym.game_management.dao.GameDAO;
-import com.codegym.game_management.entity.Games;
 import com.codegym.game_management.services.UserServices;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 @WebServlet(name = "homeUser", urlPatterns = "/home-user/*")
 public class HomeUserController extends HttpServlet {
