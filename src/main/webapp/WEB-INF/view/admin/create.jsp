@@ -5,7 +5,7 @@
   Time: 09:28 CH
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="com.codegym.game_management.entity.Categories" %>
+<%@ page import="com.codegym.game_management.model.Categories" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%

@@ -1,8 +1,8 @@
 package com.codegym.game_management.services;
 
 import com.codegym.game_management.dao.GameDAO;
-import com.codegym.game_management.entity.Categories;
-import com.codegym.game_management.entity.Games;
+import com.codegym.game_management.model.Categories;
+import com.codegym.game_management.model.Games;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

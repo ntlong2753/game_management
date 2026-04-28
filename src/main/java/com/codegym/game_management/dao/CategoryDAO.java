@@ -1,6 +1,6 @@
 package com.codegym.game_management.dao;
 
-import com.codegym.game_management.entity.Categories;
+import com.codegym.game_management.model.Categories;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,8 +79,9 @@ public class CategoryDAO extends BaseDAO {
     }
 
     public ResultSet search(String keyword) throws SQLException {
-        String sql = "SELECT * FROM user WHERE username LIKE '%" + keyword + "%'";
-        Statement statement = connect.prepareStatement(sql);
-        return statement.executeQuery(sql);
+        String sql = "SELECT * FROM categories WHERE name LIKE ?";
+        PreparedStatement statement = connect.prepareStatement(sql);
+        statement.setString(1, "%" + keyword + "%");
+        return statement.executeQuery();
     }
 }

@@ -1,4 +1,4 @@
-package com.codegym.game_management.entity;
+package com.codegym.game_management.model;
 
 public class User {
     private int id;

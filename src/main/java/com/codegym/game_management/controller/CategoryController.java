@@ -34,7 +34,7 @@ public class CategoryController extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 break;
-            case "search":
+            case "/search":
                 try {
                     categoryServices.searchCategory(request, response);
                 } catch (SQLException e) {

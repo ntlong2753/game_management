@@ -1,7 +1,7 @@
 package com.codegym.game_management.dao;
 
-import com.codegym.game_management.entity.Categories;
-import com.codegym.game_management.entity.Games;
+import com.codegym.game_management.model.Categories;
+import com.codegym.game_management.model.Games;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

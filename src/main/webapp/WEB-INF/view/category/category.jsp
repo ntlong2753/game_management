@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.codegym.game_management.entity.Categories" %>
+<%@ page import="com.codegym.game_management.model.Categories" %>
 <%@ page import="jdk.jfr.Category" %>
 <%
     String errorMessage = (String) request.getAttribute("errorMessage");
