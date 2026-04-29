@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql-database
+    restart: always
+    environment:
+      MYSQL_DATABASE: game_management
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306" # Chạy cổng 3307 để không đụng hàng với MySQL có sẵn trên máy ông
+
+  app:
+    build: .
+    container_name: game-app-container
+    ports:
+      - "8888:8080"
+    depends_on:
+      - db
+    environment:
+      JDBC_URL: jdbc:mysql://database:3306/game_management?useSSL=false&serverTimezone=UTC
