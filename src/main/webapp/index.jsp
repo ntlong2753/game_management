@@ -320,7 +320,7 @@
 </div>
 
 <!-- Footer ghim sát đáy -->
-<p class="footer-premium">THAN DONG CODEGYM NGUYEN QUANG HUU &copy; 2026</p>
+<p class="footer-premium">CASE STUDY NGUYEN THANH LONG &copy; 2026</p>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
