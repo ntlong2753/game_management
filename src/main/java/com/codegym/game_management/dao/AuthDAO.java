@@ -8,10 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.codegym.game_management.util.Database.getConnection;
-
 public class AuthDAO extends BaseDAO {
-    public static boolean registerUser(User user) throws SQLException {
+    public AuthDAO() {
+        super();
+    }
+
+    public boolean registerUser(User user) throws SQLException {
         String sql = "INSERT INTO users (username, phone, email, display_name, password, role) VALUES (?, ?, ?, ?, ?, ?)";
              PreparedStatement statement = connect.prepareStatement(sql);
             statement.setString(1, user.getUsername());
