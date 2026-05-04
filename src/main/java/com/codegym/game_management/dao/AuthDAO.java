@@ -52,6 +52,10 @@ public class AuthDAO extends BaseDAO {
 
     public Admin loginAdmin(String username, String password) throws SQLException {
         String sql = "SELECT * FROM admin WHERE username = ? AND password = ?";
+        Connection currentConnect = getConnection();
+        if (currentConnect == null) {
+            throw new SQLException("Không thể kết nối đến Database. Kiểm tra cấu hình Render!");
+        }
 
         PreparedStatement statement = connect.prepareStatement(sql);
         statement.setString(1, username);
