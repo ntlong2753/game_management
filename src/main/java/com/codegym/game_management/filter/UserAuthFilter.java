@@ -1,5 +1,6 @@
 package com.codegym.game_management.filter;
 
+import com.codegym.game_management.model.User;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,16 +14,18 @@ public class UserAuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
-        // Chỉ cho qua nếu có thẻ và thẻ ghi là USER
-        if (session != null && "USER".equals(session.getAttribute("userRole"))) {
+        User user = null;
+        if (session != null) {
+            user = (User) session.getAttribute("currentUser");
+        }
+
+        if (user != null && "USER".equals(user.getRole())) {
             chain.doFilter(request, response);
         } else {
-            // Không phải user thì đá về trang login user
             res.sendRedirect(req.getContextPath() + "/");
         }
     }

@@ -8,10 +8,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(name = "authController", urlPatterns = "/game-management/*")
-public class AuthController extends HttpServlet {
-    private AuthServices authServices;
+public class AuthServlet extends HttpServlet {
+    private AuthServices authServices = new AuthServices();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
@@ -41,13 +42,25 @@ public class AuthController extends HttpServlet {
         }
         switch (pathInfo) {
             case "/admin/login":
-                authServices.handleLogin(request, response);
+                try {
+                    authServices.handleAdminLogin(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case"/user/login":
-                authServices.handleLogin(request, response);
+                try {
+                    authServices.handleUserLogin(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case "/user/register":
-                authServices.renderPageUserRegistration(request, response);
+                try {
+                    authServices.handleUserRegister(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
         }
     }

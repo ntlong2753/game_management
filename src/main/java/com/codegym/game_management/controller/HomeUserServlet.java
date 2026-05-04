@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet(name = "homeUser", urlPatterns = "/home-user/*")
-public class HomeUserController extends HttpServlet {
+public class HomeUserServlet extends HttpServlet {
     private static final UserServices userServices = new UserServices();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -32,6 +32,5 @@ public class HomeUserController extends HttpServlet {
                 }
                 break;
         }
-
     }
 }

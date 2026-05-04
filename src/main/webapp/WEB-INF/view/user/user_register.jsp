@@ -225,13 +225,18 @@
       </div>
 
       <div class="form-floating mb-3">
+        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Số điện thoại" required autocomplete="off">
+        <label for="phone">Số điện thoại</label>
+      </div>
+
+      <div class="form-floating mb-3">
         <input type="email" class="form-control" id="email" name="email" placeholder="Email" required autocomplete="off">
         <label for="email">Địa chỉ Email</label>
       </div>
 
       <div class="form-floating mb-3">
-        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Số điện thoại" required autocomplete="off">
-        <label for="phone">Số điện thoại</label>
+        <input type="text" class="form-control" id="displayName" name="display_name" placeholder="Tên hiển thị" required autocomplete="off">
+        <label for="displayName">Tên hiển thị</label>
       </div>
 
       <div class="form-floating mb-3">

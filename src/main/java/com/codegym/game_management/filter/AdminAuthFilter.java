@@ -18,12 +18,15 @@ public class AdminAuthFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
-        // Chỉ cho qua nếu có thẻ và thẻ ghi là ADMIN
-        if (session != null && "ADMIN".equals(session.getAttribute("userRole"))) {
+        String role = null;
+        if (session != null) {
+            role = (String) session.getAttribute("adminRole");
+        }
+
+        if ("ADMIN".equals(role)) {
             chain.doFilter(request, response);
         } else {
-            // Không phải admin thì đá về trang login admin
-            res.sendRedirect(req.getContextPath() + "/");
+            res.sendRedirect(req.getContextPath() + "/game-management/admin/login");
         }
     }
 }

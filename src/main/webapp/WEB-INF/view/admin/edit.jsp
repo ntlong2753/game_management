@@ -397,7 +397,7 @@
                 <!-- Hình Ảnh (Không bắt buộc) -->
                 <div class="col-md-6">
                     <label for="image" class="form-label">Cập nhật Hình Ảnh</label>
-                    <!-- BỎ thuộc tính required, cho phép submit mà không cần chọn ảnh mới -->
+                    <input type="hidden" name="oldImage" value="<%=game.getImage()%>">
                     <input type="file" class="form-control" id="image" name="image" accept="image/*">
                     <span class="file-hint"><i class="bi bi-info-circle"></i> Bỏ trống nếu không muốn thay đổi hình ảnh hiện tại.</span>
                 </div>

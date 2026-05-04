@@ -1,9 +1,7 @@
 package com.codegym.game_management.controller;
 
-import com.codegym.game_management.services.GameServices;
-import com.google.protobuf.ServiceException;
+import com.codegym.game_management.services.CategoryServices;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,16 +10,40 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@MultipartConfig(
-        fileSizeThreshold = 0,
-        maxFileSize = 1024 * 1024 * 10,
-        maxRequestSize = 1024 * 1024 * 100
-)
-@WebServlet(name = "homeAdmin", urlPatterns = "/home-admin/*")
-public class HomeAdminController extends HttpServlet {
-    private static GameServices gameServices = new GameServices();
+@WebServlet(name = "categoryController", urlPatterns = "/home-admin/category/*")
+public class CategoryServlet extends HttpServlet {
+    private static final CategoryServices categoryServices = new CategoryServices();
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String pathInfo = request.getPathInfo();
+        if (pathInfo == null) {
+            pathInfo = "/";
+        }
+        switch (pathInfo) {
+            case "/":
+                try {
+                    categoryServices.renderPageCategory(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case "/delete":
+                try {
+                    categoryServices.deleteCategory(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case "/search":
+                try {
+                    categoryServices.searchCategory(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+        }
+    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
         if (pathInfo == null) {
@@ -30,63 +52,24 @@ public class HomeAdminController extends HttpServlet {
         switch (pathInfo) {
             case "/":
                 try {
-                    gameServices.renderPageGames(request, response);
+                    categoryServices.renderPageCategory(request, response);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
                 break;
             case "/create":
                 try {
-                    gameServices.renderFormCreate(request, response);
+                    categoryServices.createCategory(request, response);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
                 break;
             case "/edit":
                 try {
-                    gameServices.renderFormUpdate(request, response);
+                    categoryServices.editCategory(request, response);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                break;
-            case "/delete":
-                try {
-                    gameServices.deleteGame(request, response);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
-            case "/search":
-                try {
-                    gameServices.searchGame(request, response);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
-
-        }
-    }
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String pathInfo = request.getPathInfo();
-        if (pathInfo == null) {
-            pathInfo = "/";
-        }
-        switch (pathInfo) {
-            case "/create":
-                try {
-                    gameServices.createGame(request, response);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
-            case "/edit":
-                try {
-                    gameServices.updateGame(request, response);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
         }
     }
 }
