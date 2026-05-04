@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Database {
-    private static String url = System.getenv("DATABASE_URL") != null
-            ? System.getenv("DATABASE_URL")
-            : "jdbc:mysql://localhost:3306/game_management?useSSL=false";
+    private static String url = "jdbc:mysql://localhost:3306/game_management?useSSL=false&serverTimezone=UTC";
     private static String username = "root";
     private static String password = "ditmemay2507@lol";
     //private String driver = "com.mysql.cj.jdbc.Driver";
