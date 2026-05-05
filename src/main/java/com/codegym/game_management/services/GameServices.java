@@ -51,7 +51,7 @@ public class GameServices {
 
         // 3. Đường dẫn tuyệt đối đến thư mục images trong project của bạn
         // QUAN TRỌNG: Bạn phải copy đường dẫn thực tế từ ổ đĩa máy bạn dán vào đây
-        String uploadPath = "D:/Du_lieu/CodeGym/Module_3/game_management/src/main/webapp/image_save";
+        String uploadPath = "getServletContext().getRealPath(\"/\") + \"image_save";
         // 4. Ghi file vào thư mục project
         filePart.write(uploadPath + File.separator + fileName);
         // 5. Lưu đường dẫn này vào Database (để khi reset server vẫn còn đường dẫn để load)

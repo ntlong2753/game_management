@@ -411,7 +411,7 @@
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/home-admin">
-            <i class="bi bi-shield-check"></i> Admin Panel
+            <i class="bi bi-shield-check"></i> AdminPanel
         </a>
         <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
