@@ -49,13 +49,22 @@ public class GameServices {
         // 2. Lấy tên file gốc
         String fileName = filePart.getSubmittedFileName();
 
-        // 3. Đường dẫn tuyệt đối đến thư mục images trong project của bạn
-        // QUAN TRỌNG: Bạn phải copy đường dẫn thực tế từ ổ đĩa máy bạn dán vào đây
-        String uploadPath = "getServletContext().getRealPath(\"/\") + \"image_save";
-        // 4. Ghi file vào thư mục project
-        filePart.write(uploadPath + File.separator + fileName);
-        // 5. Lưu đường dẫn này vào Database (để khi reset server vẫn còn đường dẫn để load)
-        newGame.setImage("image_save/" + fileName);
+        if (fileName != null && !fileName.isEmpty()) {
+            // Lấy đường dẫn tuyệt đối của thư mục image_save nằm trong webapp trên SERVER
+            String uploadPath = request.getServletContext().getRealPath("/image_save");
+
+            // Kiểm tra nếu thư mục chưa tồn tại thì tạo mới
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            // Ghi file
+            filePart.write(uploadPath + File.separator + fileName);
+
+            // Lưu vào DB đường dẫn tương đối để hiển thị trên JSP
+            newGame.setImage("image_save/" + fileName);
+        }
 
 
         newGame.setName(request.getParameter("name"));
@@ -101,18 +110,26 @@ public class GameServices {
         String finalImagePath;
 
         if (fileName != null && !fileName.isEmpty()) {
-            // TRƯỜNG HỢP 1: Người dùng có chọn ảnh mới
-            // Làm sạch tên file như bạn muốn (Paths.get...)
+            // 1. Làm sạch tên file
             String safeFileName = Paths.get(fileName).getFileName().toString();
-            String uploadPath = "D:/Du_lieu/CodeGym/Module_3/game_management/src/main/webapp/image_save";
 
+            // 2. Lấy đường dẫn động từ Server (SỬA Ở ĐÂY)
+            String uploadPath = request.getServletContext().getRealPath("/image_save");
+
+            // 3. Kiểm tra và tạo thư mục nếu chưa có
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+            // 4. Ghi file vào server
             filePart.write(uploadPath + File.separator + safeFileName);
             finalImagePath = "image_save/" + safeFileName;
-
-            // (Tùy chọn) Xóa file ảnh cũ trên ổ đĩa để dọn rác
-            File oldFile = new File("D:/Du_lieu/.../webapp/" + oldImage);
-            if(oldFile.exists()) oldFile.delete();
-
+            // 5. (Tùy chọn) Xóa file cũ
+            String oldFilePath = request.getServletContext().getRealPath("/") + oldImage;
+            File oldFile = new File(oldFilePath);
+            if (oldFile.exists()) {
+                oldFile.delete();
+            }
         } else {
             // TRƯỜNG HỢP 2: Người dùng không chọn ảnh, giữ nguyên ảnh cũ
             finalImagePath = oldImage;
