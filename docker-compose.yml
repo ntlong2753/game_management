@@ -9,6 +9,7 @@ services:
     ports:
       - "3307:3306"
     volumes:
+      - mysql_data:/var/lib/mysql
       - ./mysql:/docker-entrypoint-initdb.d
     healthcheck:
         test: ["CMD-SHELL", "mysql -u root -p${MYSQL_ROOT_PASSWORD} -e 'SELECT 1;'"]
@@ -23,3 +24,6 @@ services:
       - "8888:8080"
     depends_on:
       - db
+
+volumes:
+  mysql_data:
