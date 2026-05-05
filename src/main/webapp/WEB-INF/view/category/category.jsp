@@ -293,7 +293,7 @@
                 <table class="table-custom">
                     <thead>
                     <tr>
-                        <%--<th class="text-center">ID</th>--%>
+                        <th class="text-center">ID</th>
                         <th>Tên Thể Loại</th>
                         <th class="text-center">Thao Tác</th>
                     </tr>
@@ -301,7 +301,7 @@
                     <tbody>
                     <% for(Categories category : categoryList) { %>
                     <tr>
-                        <%--<td class="col-id text-center"><%=category.getId()%></td>--%>
+                        <td class="col-id text-center"><%=category.getId()%></td>
                         <td class="col-name"><%=category.getName()%></td>
                         <td class="text-center">
                             <div class="d-flex gap-2 justify-content-center">

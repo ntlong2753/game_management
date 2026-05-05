@@ -476,7 +476,7 @@
         <table class="table-custom">
             <thead>
             <tr>
-                <%--<th class="text-center">ID</th>--%>
+                <th class="text-center">ID</th>
                 <th>Hình Ảnh</th>
                 <th>Tên Game</th>
                 <th>Thể Loại</th>
@@ -489,7 +489,7 @@
 
             <% for (Games game : gameList) { %>
             <tr>
-                <%--<td class="col-id text-center"><%=game.getId()%></td>--%>
+                <td class="col-id text-center"><%=game.getId()%></td>
                 <td>
                     <img src="<%=request.getContextPath()%>/<%= game.getImage()%>" alt="Hình ảnh" class="list-game-img">
                 </td>
