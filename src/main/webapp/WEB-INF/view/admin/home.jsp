@@ -410,8 +410,8 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container">
-        <a class="navbar-brand" href="/home-admin">
-            <i class="bi bi-shield-check"></i> AdminPanel
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/home-admin">
+            <i class="bi bi-shield-check"></i> Admin Panel
         </a>
         <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -419,10 +419,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-center gap-3">
                 <li class="nav-item">
-                    <a class="nav-link nav-link-custom" href="/home-admin/category">Quản Lý thể loại</a>
+                    <a class="nav-link nav-link-custom" href="${pageContext.request.contextPath}/home-admin/category">Quản Lý thể loại</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-custom active" href="/home-admin/">Quản Lý Game</a>
+                    <a class="nav-link nav-link-custom active" href="${pageContext.request.contextPath}/home-admin/">Quản Lý Game</a>
                 </li>
                 <li class="nav-item">
                     <span class="text-white ms-3 me-2"><i class="bi bi-person-circle"></i> Xin chào, Quản trị viên!</span>
@@ -452,8 +452,6 @@
                     <i class="bi bi-search"></i>
                 </button>
             </form>
-
-            <!-- Nút Hiển thị tất cả -->
             <a href="${pageContext.request.contextPath}/home-admin" class="btn-show-all" title="Hiển thị toàn bộ danh sách">
                 <i class="bi bi-collection"></i> Tất Cả
             </a>
