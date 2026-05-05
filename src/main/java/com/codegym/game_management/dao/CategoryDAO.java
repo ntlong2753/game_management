@@ -80,7 +80,7 @@ public class CategoryDAO extends BaseDAO {
 
     public List<Categories> search(String keyword) throws SQLException {
         List<Categories> list = new ArrayList<>();
-        String sql = "SELECT * FROM categories WHERE name LIKE ?";
+        String sql = "SELECT * FROM categories WHERE name LIKE ? ORDER BY id ASC";
         PreparedStatement statement = connect.prepareStatement(sql);
         statement.setString(1, "%" + keyword + "%");
         ResultSet resultSet = statement.executeQuery();

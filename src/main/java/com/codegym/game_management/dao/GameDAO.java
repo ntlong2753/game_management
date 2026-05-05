@@ -97,7 +97,8 @@ public class GameDAO extends BaseDAO {
         String sql = "SELECT games.*, categories.name AS category_name " +
                 "FROM games " +
                 "JOIN categories ON games.category_id = categories.id " +
-                "WHERE games.name LIKE ?";
+                "WHERE games.name LIKE ?" +
+                "ORDER BY games.id ASC";
         PreparedStatement statement = connect.prepareStatement(sql);
         statement.setString(1, "%" + keyword + "%");
         ResultSet resultSet = statement.executeQuery();
