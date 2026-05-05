@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Database {
-    private static String url = "jdbc:mysql://db:3307/game_management?useSSL=false&serverTimezone=UTC";
-    private static String username = "root";
-    private static String password = "root";
+    private static final String URL = System.getenv("DB_URL");
+    private static final String USERNAME = System.getenv("DB_USERNAME");
+    private static final String PASSWORD = System.getenv("DB_PASSWORD");
 
     public Database() {
 
@@ -16,7 +16,7 @@ public class Database {
         Connection connection = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("Connected to database successfully!");
         } catch (ClassNotFoundException e) {
             System.out.println("Driver not found!");
