@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Database {
-    private static String url = "jdbc:mysql://db:3306/game_management?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-    private static String username = "root";
-    private static String password = "root";
+    //private static String url = "jdbc:mysql://db:3306/game_management?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+    //private static String username = "root";
+    //private static String password = "root";
+    private static String url = System.getenv("DB_URL");
+    private static String username = System.getenv("DB_USERNAME");
+    private static String password = System.getenv("DB_PASSWORD");
 
     public Database() {
 
