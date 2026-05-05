@@ -48,7 +48,7 @@ public class GameDAO extends BaseDAO {
         statement.executeUpdate();
     }
 
-    public static void update(int id, String name, String image, String description, double price, Categories category)
+    public void update(int id, String name, String image, String description, double price, Categories category)
             throws SQLException {
         String sql = "UPDATE games SET name = ?, image = ?, description = ?, price = ?, category_id = ? WHERE id = ?";
         PreparedStatement statement = connect.prepareStatement(sql);
@@ -61,7 +61,7 @@ public class GameDAO extends BaseDAO {
         statement.executeUpdate();
     }
 
-    public static Games getById(int id) throws SQLException {
+    public Games getById(int id) throws SQLException {
         String sql = "SELECT games.*, categories.name AS category_name " +
                     "FROM games " +
                     "JOIN categories ON games.category_id = categories.id " +

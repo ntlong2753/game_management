@@ -14,15 +14,7 @@ public class AuthDAO extends BaseDAO {
     }
 
     public boolean registerUser(User user) throws SQLException {
-        // Đảm bảo kết nối còn sống trước khi query
-        if (connect == null || connect.isClosed()) {
-            connect = com.codegym.game_management.util.Database.getConnection();
-        }
 
-        if (connect == null) {
-            throw new SQLException("Kết nối cơ sở dữ liệu thất bại (connect is null)");
-        }
-        /*------------------------------------------------------------------------------------*/
         String sql = "INSERT INTO users (username, phone, email, display_name, password, role) VALUES (?, ?, ?, ?, ?, ?)";
              PreparedStatement statement = connect.prepareStatement(sql);
             statement.setString(1, user.getUsername());
@@ -36,17 +28,7 @@ public class AuthDAO extends BaseDAO {
     }
 
     public User loginUser(String username, String password) throws SQLException {
-        // Đảm bảo kết nối còn sống trước khi query
-        if (connect == null || connect.isClosed()) {
-            connect = com.codegym.game_management.util.Database.getConnection();
-        }
-
-        if (connect == null) {
-            throw new SQLException("Kết nối cơ sở dữ liệu thất bại (connect is null)");
-        }
-        /*------------------------------------------------------------------------------------*/
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-
         PreparedStatement statement = connect.prepareStatement(sql);
         statement.setString(1, username);
         statement.setString(2, password);
@@ -69,15 +51,6 @@ public class AuthDAO extends BaseDAO {
     }
 
     public Admin loginAdmin(String username, String password) throws SQLException {
-        // Đảm bảo kết nối còn sống trước khi query
-        if (connect == null || connect.isClosed()) {
-            connect = com.codegym.game_management.util.Database.getConnection();
-        }
-
-        if (connect == null) {
-            throw new SQLException("Kết nối cơ sở dữ liệu thất bại (connect is null)");
-        }
-        /*------------------------------------------------------------------------------------*/
         String sql = "SELECT * FROM admin WHERE username = ? AND password = ?";
 
         PreparedStatement statement = connect.prepareStatement(sql);
@@ -100,15 +73,6 @@ public class AuthDAO extends BaseDAO {
 
     // Kiểm tra username đã tồn tại
     public boolean isUsernameExists(String username) throws SQLException {
-        // Đảm bảo kết nối còn sống trước khi query
-        if (connect == null || connect.isClosed()) {
-            connect = com.codegym.game_management.util.Database.getConnection();
-        }
-
-        if (connect == null) {
-            throw new SQLException("Kết nối cơ sở dữ liệu thất bại (connect is null)");
-        }
-        /*------------------------------------------------------------------------------------*/
         String sql = "SELECT username FROM users WHERE username = ?";
         PreparedStatement statement = connect.prepareStatement(sql);
         statement.setString(1, username);
@@ -118,15 +82,6 @@ public class AuthDAO extends BaseDAO {
 
     // Kiểm tra số điện thoại đã tồn tại
     public boolean isPhoneExists(String phone) throws SQLException {
-        // Đảm bảo kết nối còn sống trước khi query
-        if (connect == null || connect.isClosed()) {
-            connect = com.codegym.game_management.util.Database.getConnection();
-        }
-
-        if (connect == null) {
-            throw new SQLException("Kết nối cơ sở dữ liệu thất bại (connect is null)");
-        }
-        /*------------------------------------------------------------------------------------*/
         String sql = "SELECT phone FROM users WHERE phone = ?";
         PreparedStatement statement = connect.prepareStatement(sql);
         statement.setString(1, phone);
@@ -137,15 +92,6 @@ public class AuthDAO extends BaseDAO {
 
     // Kiểm tra email đã tồn tại chưa
     public boolean isEmailExists(String email) throws SQLException {
-        // Đảm bảo kết nối còn sống trước khi query
-        if (connect == null || connect.isClosed()) {
-            connect = com.codegym.game_management.util.Database.getConnection();
-        }
-
-        if (connect == null) {
-            throw new SQLException("Kết nối cơ sở dữ liệu thất bại (connect is null)");
-        }
-        /*------------------------------------------------------------------------------------*/
         String sql = "SELECT email FROM users WHERE email = ?";
         PreparedStatement statement = connect.prepareStatement(sql);
         statement.setString(1, email);
