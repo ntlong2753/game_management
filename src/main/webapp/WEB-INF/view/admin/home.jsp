@@ -476,9 +476,10 @@
         <table class="table-custom">
             <thead>
             <tr>
-                <th class="text-center">ID</th>
-                <th>Hình Ảnh</th>
+                <%--<th class="text-center">ID</th>--%>
                 <th>Tên Game</th>
+                <th>Hình Ảnh</th>
+
                 <th>Thể Loại</th>
                 <th>Mô tả</th>
                 <th>Giá</th>
@@ -489,11 +490,12 @@
 
             <% for (Games game : gameList) { %>
             <tr>
-                <td class="col-id text-center"><%=game.getId()%></td>
+                <%--<td class="col-id text-center"><%=game.getId()%></td>--%>
+                <td class="col-name"><%=game.getName()%></td>
                 <td>
                     <img src="<%=request.getContextPath()%>/<%= game.getImage()%>" alt="Hình ảnh" class="list-game-img">
                 </td>
-                <td class="col-name"><%=game.getName()%></td>
+
                 <td><span class="badge-category"><%=game.getCategory().getName()%></span></td>
                 <td class="col-desc"><%=game.getDescription()%></td>
                 <td class="col-price"><%= String.format("%,.0f", game.getPrice()) %> VNĐ</td>

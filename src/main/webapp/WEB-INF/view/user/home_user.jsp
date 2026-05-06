@@ -490,7 +490,7 @@
                     <!-- Khu vực Hình ảnh -->
                     <div class="img-container">
                         <!-- ID góc phải trên -->
-                        <span class="badge-id"><%= game.getId() %></span>
+                        <%--<span class="badge-id"><%= game.getId() %></span>--%>
                         <img src="<%= request.getContextPath() %>/<%= game.getImage() %>" alt="Hình ảnh">
                         <div class="img-overlay"></div>
                         <!-- Giá tiền góc phải dưới -->
