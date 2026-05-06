@@ -50,7 +50,7 @@ public class GameServices {
         String fileName = filePart.getSubmittedFileName();
 
         if (fileName != null && !fileName.isEmpty()) {
-            // Lấy đường dẫn tuyệt đối của thư mục image_save nằm trong webapp trên SERVER
+
             String uploadPath = request.getServletContext().getRealPath("/image_save");
 
             // Kiểm tra nếu thư mục chưa tồn tại thì tạo mới
