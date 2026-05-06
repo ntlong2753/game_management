@@ -1,8 +1,8 @@
 package com.codegym.game_management.services;
 
 import com.codegym.game_management.dao.AuthDAO;
-import com.codegym.game_management.model.Admin;
-import com.codegym.game_management.model.User;
+import com.codegym.game_management.entity.Admin;
+import com.codegym.game_management.entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

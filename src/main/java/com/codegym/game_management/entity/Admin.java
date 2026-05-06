@@ -1,4 +1,4 @@
-package com.codegym.game_management.model;
+package com.codegym.game_management.entity;
 
 public class Admin {
     private int id;

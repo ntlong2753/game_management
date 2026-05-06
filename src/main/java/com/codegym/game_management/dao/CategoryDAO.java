@@ -1,11 +1,10 @@
 package com.codegym.game_management.dao;
 
-import com.codegym.game_management.model.Categories;
+import com.codegym.game_management.entity.Categories;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 

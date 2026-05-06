@@ -2,8 +2,8 @@ package com.codegym.game_management.services;
 
 import com.codegym.game_management.dao.CategoryDAO;
 import com.codegym.game_management.dao.GameDAO;
-import com.codegym.game_management.model.Categories;
-import com.codegym.game_management.model.Games;
+import com.codegym.game_management.entity.Categories;
+import com.codegym.game_management.entity.Games;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,9 +12,7 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameServices {

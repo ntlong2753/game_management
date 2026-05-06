@@ -1,6 +1,6 @@
 package com.codegym.game_management.filter;
 
-import com.codegym.game_management.model.User;
+import com.codegym.game_management.entity.User;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;

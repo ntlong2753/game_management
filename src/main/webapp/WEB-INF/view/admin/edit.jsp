@@ -1,5 +1,5 @@
-<%@ page import="com.codegym.game_management.model.Games" %>
-<%@ page import="com.codegym.game_management.model.Categories" %>
+<%@ page import="com.codegym.game_management.entity.Games" %>
+<%@ page import="com.codegym.game_management.entity.Categories" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: ntlong

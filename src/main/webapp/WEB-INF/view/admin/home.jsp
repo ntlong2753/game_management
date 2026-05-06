@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.codegym.game_management.model.Games" %>
+<%@ page import="com.codegym.game_management.entity.Games" %>
 <%
     // Giả lập lấy danh sách game từ request cho Admin
     List<Games> gameList = (List<Games>) request.getAttribute("game");

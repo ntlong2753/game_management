@@ -1,9 +1,8 @@
 package com.codegym.game_management.dao;
 
-import com.codegym.game_management.model.Admin;
-import com.codegym.game_management.model.User;
+import com.codegym.game_management.entity.Admin;
+import com.codegym.game_management.entity.User;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +15,7 @@ public class AuthDAO extends BaseDAO {
     public boolean registerUser(User user) throws SQLException {
 
         String sql = "INSERT INTO users (username, phone, email, display_name, password, role) VALUES (?, ?, ?, ?, ?, ?)";
-             PreparedStatement statement = connect.prepareStatement(sql);
+            PreparedStatement statement = connect.prepareStatement(sql);
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPhone());
             statement.setString(3, user.getEmail());
@@ -24,7 +23,12 @@ public class AuthDAO extends BaseDAO {
             statement.setString(5, user.getPassword());
             statement.setString(6, user.getRole());
 
-            return statement.executeUpdate() > 0;
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                return true;
+            } else {
+                return false;
+            }
     }
 
     public User loginUser(String username, String password) throws SQLException {

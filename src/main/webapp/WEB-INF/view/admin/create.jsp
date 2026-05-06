@@ -5,7 +5,7 @@
   Time: 09:28 CH
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="com.codegym.game_management.model.Categories" %>
+<%@ page import="com.codegym.game_management.entity.Categories" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -367,6 +367,17 @@
                     <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
                 </div>
 
+                <!-- Preview ảnh -->
+                <div class="mt-3">
+                    <label class="form-label">Xem trước ảnh:</label>
+                    <div class="preview-container" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px; text-align: center;">
+                        <img id="imagePreview" src="#" alt="Preview" style="max-width: 100%; max-height: 200px; display: none;">
+                        <div id="noImageText" class="text-secondary small">
+                            <i class="bi bi-image"></i> Chưa có ảnh nào được chọn
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Mô Tả -->
                 <div class="col-12">
                     <label for="description" class="form-label">Mô tả chi tiết</label>
@@ -390,5 +401,27 @@
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.getElementById('image').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('imagePreview');
+        const noImageText = document.getElementById('noImageText');
+
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                if (noImageText) noImageText.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+            if (noImageText) noImageText.style.display = 'block';
+            preview.src = '#';
+        }
+    });
+</script>
 </body>
 </html>

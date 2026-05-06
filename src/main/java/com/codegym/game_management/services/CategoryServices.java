@@ -1,15 +1,13 @@
 package com.codegym.game_management.services;
 
 import com.codegym.game_management.dao.CategoryDAO;
-import com.codegym.game_management.model.Categories;
+import com.codegym.game_management.entity.Categories;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryServices {

@@ -1,16 +1,13 @@
 package com.codegym.game_management.services;
 
 import com.codegym.game_management.dao.GameDAO;
-import com.codegym.game_management.model.Categories;
-import com.codegym.game_management.model.Games;
+import com.codegym.game_management.entity.Games;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserServices {
