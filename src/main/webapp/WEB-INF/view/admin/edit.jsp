@@ -306,6 +306,39 @@
                 justify-content: center;
             }
         }
+
+
+        /* Preview ảnh */
+        .preview-area {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            margin-top: 12px;
+            border: 1px dashed rgba(255,255,255,0.2);
+        }
+
+        .preview-img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .preview-placeholder {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .preview-placeholder i {
+            margin-right: 5px;
+        }
+
+        .current-image-info {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
@@ -402,6 +435,25 @@
                     <span class="file-hint"><i class="bi bi-info-circle"></i> Bỏ trống nếu không muốn thay đổi hình ảnh hiện tại.</span>
                 </div>
 
+
+
+                <!-- Khu vực preview ảnh (vừa hiển thị ảnh cũ, vừa preview ảnh mới) -->
+                <div class="preview-area">
+                    <div id="currentImageInfo" class="current-image-info">
+                        <% if (game.getImage() != null && !game.getImage().isEmpty()) { %>
+                        <i class="bi bi-image-fill"></i> Ảnh hiện tại: <%= game.getImage() %>
+                        <% } else { %>
+                        <i class="bi bi-image-slash"></i> Chưa có ảnh
+                        <% } %>
+                    </div>
+                    <img id="imagePreview" class="preview-img" src="#" alt="Preview">
+                    <div id="noImageText" class="preview-placeholder">
+                        <i class="bi bi-image"></i> Chưa có ảnh nào được chọn
+                    </div>
+                </div>
+
+
+
                 <!-- Mô Tả -->
                 <div class="col-12">
                     <label for="description" class="form-label">Mô tả chi tiết</label>
@@ -423,5 +475,69 @@
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const fileInput = document.getElementById('image');
+        const previewImg = document.getElementById('imagePreview');
+        const noImageText = document.getElementById('noImageText');
+        const currentImageInfo = document.getElementById('currentImageInfo');
+
+        // Hiển thị ảnh cũ nếu có (dùng đường dẫn tương đối hoặc tuyệt đối)
+        const oldImagePath = '<%= game.getImage() != null && !game.getImage().isEmpty() ? request.getContextPath() + "/uploads/" + game.getImage() : "" %>';
+        if (oldImagePath) {
+            previewImg.src = oldImagePath;
+            previewImg.style.display = 'block';
+            if (noImageText) noImageText.style.display = 'none';
+        }
+
+        // Lắng nghe sự kiện chọn file mới
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    previewImg.style.display = 'block';
+                    if (noImageText) noImageText.style.display = 'none';
+                    // Thay đổi thông báo ảnh hiện tại thành "Đã chọn ảnh mới"
+                    if (currentImageInfo) {
+                        currentImageInfo.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Đã chọn ảnh mới (sẽ thay thế khi cập nhật)';
+                        currentImageInfo.style.color = '#6ee7b7';
+                    }
+                };
+                reader.readAsDataURL(file);
+            } else if (file) {
+                // Nếu chọn file không phải ảnh
+                previewImg.style.display = 'none';
+                if (noImageText) noImageText.style.display = 'block';
+                if (currentImageInfo) {
+                    currentImageInfo.innerHTML = '<i class="bi bi-exclamation-triangle-fill text-warning"></i> File không hợp lệ. Vui lòng chọn ảnh.';
+                    currentImageInfo.style.color = '#fca5a5';
+                }
+                setTimeout(() => {
+                    fileInput.value = '';
+                }, 100);
+            } else {
+                // Nếu bỏ chọn (xóa file) -> quay lại ảnh cũ
+                if (oldImagePath) {
+                    previewImg.src = oldImagePath;
+                    previewImg.style.display = 'block';
+                    if (currentImageInfo) {
+                        currentImageInfo.innerHTML = '<i class="bi bi-image-fill"></i> Ảnh hiện tại: <%= game.getImage() %>';
+                        currentImageInfo.style.color = '#94a3b8';
+                    }
+                } else {
+                    previewImg.style.display = 'none';
+                    if (noImageText) noImageText.style.display = 'block';
+                    if (currentImageInfo) {
+                        currentImageInfo.innerHTML = '<i class="bi bi-image-slash"></i> Chưa có ảnh';
+                        currentImageInfo.style.color = '#94a3b8';
+                    }
+                }
+                if (noImageText) noImageText.style.display = oldImagePath ? 'none' : 'block';
+            }
+        });
+    });
+</script>
 </body>
 </html>
