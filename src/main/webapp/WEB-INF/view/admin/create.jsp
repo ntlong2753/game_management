@@ -397,7 +397,6 @@
                 </div>
 
                 <!-- Preview ảnh -->
-                <!-- Preview ảnh - dùng class CSS -->
                 <div class="preview-area">
                     <img id="imagePreview" class="preview-img" src="#" alt="Preview">
                     <div id="noImageText" class="preview-placeholder">
@@ -430,24 +429,43 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    document.getElementById('image').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        const preview = document.getElementById('imagePreview');
-        const noImageText = document.getElementById('noImageText');
+    const imageInput = document.getElementById('image-input');
+    const imagePreview = document.getElementById('image-preview');
+    const uploadContent = document.getElementById('upload-content');
+    const removeBtn = document.getElementById('remove-img-btn');
 
-        if (file && file.type.startsWith('image/')) {
+    function clearImage() {
+        imageInput.value = "";
+        imagePreview.src = "";
+        imagePreview.style.display = 'none';
+        uploadContent.style.display = 'block';
+        removeBtn.style.display = 'none';
+    }
+
+    imageInput.addEventListener('change', function () {
+        const file = this.files[0];
+
+        if (file) {
+            if (!file.type.startsWith('image/')) {
+                alert("Vui lòng chọn một file hình ảnh (jpg, png, webp...)");
+                clearImage();
+                return;
+            }
+
             const reader = new FileReader();
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-                if (noImageText) noImageText.style.display = 'none';
-            };
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+                uploadContent.style.display = 'none';
+                removeBtn.style.display = 'block';
+            }
             reader.readAsDataURL(file);
-        } else {
-            preview.style.display = 'none';
-            if (noImageText) noImageText.style.display = 'block';
-            preview.src = '#';
         }
+    });
+
+    removeBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        clearImage();
     });
 </script>
 </body>
