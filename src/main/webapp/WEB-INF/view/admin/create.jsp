@@ -34,6 +34,35 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <style>
+        /* Preview ảnh - tách riêng CSS */
+        .preview-area {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 0.5rem;
+            border: 1px dashed rgba(255,255,255,0.2);
+        }
+
+        .preview-img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .preview-placeholder {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .preview-placeholder i {
+            margin-right: 5px;
+        }
+
+
+
+
         :root {
             --bg-dark: #0f172a;
             --admin-accent: #38bdf8;
@@ -368,13 +397,11 @@
                 </div>
 
                 <!-- Preview ảnh -->
-                <div class="mt-3">
-                    <label class="form-label">Xem trước ảnh:</label>
-                    <div class="preview-container" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px; text-align: center;">
-                        <img id="imagePreview" src="#" alt="Preview" style="max-width: 100%; max-height: 200px; display: none;">
-                        <div id="noImageText" class="text-secondary small">
-                            <i class="bi bi-image"></i> Chưa có ảnh nào được chọn
-                        </div>
+                <!-- Preview ảnh - dùng class CSS -->
+                <div class="preview-area">
+                    <img id="imagePreview" class="preview-img" src="#" alt="Preview">
+                    <div id="noImageText" class="preview-placeholder">
+                        <i class="bi bi-image"></i> Chưa có ảnh nào được chọn
                     </div>
                 </div>
 
