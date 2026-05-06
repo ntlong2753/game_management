@@ -153,7 +153,7 @@
             color: white;
             border-radius: 0 15px 15px 0;
             padding: 0 30px;
-            font-weight: 600;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s;
