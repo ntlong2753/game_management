@@ -475,5 +475,27 @@
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.getElementById('image').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('imagePreview');
+        const noImageText = document.getElementById('noImageText');
+
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                if (noImageText) noImageText.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+            if (noImageText) noImageText.style.display = 'block';
+            preview.src = '#';
+        }
+    });
+</script>
 </body>
 </html>
