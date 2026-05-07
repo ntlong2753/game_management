@@ -12,7 +12,7 @@ public class AuthDAO extends BaseDAO {
         super();
     }
 
-    public boolean registerUser(User user) throws SQLException {
+    public void registerUser(User user) throws SQLException {
 
         String sql = "INSERT INTO users (username, phone, email, display_name, password, role) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connect.prepareStatement(sql);
@@ -24,11 +24,6 @@ public class AuthDAO extends BaseDAO {
             statement.setString(6, user.getRole());
 
             int rowsAffected = statement.executeUpdate();
-            if (rowsAffected > 0) {
-                return true;
-            } else {
-                return false;
-            }
     }
 
     public User loginUser(String username, String password) throws SQLException {

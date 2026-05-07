@@ -24,7 +24,7 @@ public class CategoryDAO extends BaseDAO {
         return list;
     }
 
-    public Categories getCategoryById(int id) throws SQLException {
+    /*public Categories getCategoryById(int id) throws SQLException {
         String sql = "SELECT * FROM categories WHERE id = ?";
         PreparedStatement statement = connect.prepareStatement(sql);
         statement.setInt(1, id);
@@ -37,7 +37,7 @@ public class CategoryDAO extends BaseDAO {
             return category;
         }
         return null;
-    }
+    }*/
 
     public void createCategory(String name) throws SQLException {
         String sql = "INSERT INTO categories (name) VALUES (?)";
@@ -54,7 +54,7 @@ public class CategoryDAO extends BaseDAO {
         statement.executeUpdate();
     }
 
-    public Categories getById(int id) throws SQLException {
+    /*public Categories getById(int id) throws SQLException {
         String sql = "SELECT * FROM categories WHERE id = ?";
         PreparedStatement statement = connect.prepareStatement(sql);
         statement.setInt(1, id);
@@ -68,7 +68,7 @@ public class CategoryDAO extends BaseDAO {
         }
 
         return null; // Trả về null nếu không tìm thấy ID
-    }
+    }*/
 
     public void delete(int id) throws SQLException {
         String sql = "DELETE FROM categories WHERE id = ?";

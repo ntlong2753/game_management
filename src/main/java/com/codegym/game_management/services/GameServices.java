@@ -16,55 +16,46 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class GameServices {
-    private static final GameDAO GAME_DAO = new GameDAO();
-    private static final CategoryDAO CATEGORY_DAO = new CategoryDAO();
+    private final GameDAO GAME_DAO = new GameDAO();
+    private final CategoryDAO CATEGORY_DAO = new CategoryDAO();
 
     public GameServices() {
 
     }
-    public static void renderPageGames(HttpServletRequest request, HttpServletResponse response)
+    public void renderPageGames(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         List<Games> games = GAME_DAO.getAll();
         request.setAttribute("game", games);
         request.getRequestDispatcher("/WEB-INF/view/admin/home.jsp").forward(request, response);
     }
 
-    public static void renderFormCreate(HttpServletRequest request, HttpServletResponse response)
+    public void renderFormCreate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         List<Categories> categories = CATEGORY_DAO.getAllCategory();
         request.setAttribute("categoryCreateGame", categories);
         request.getRequestDispatcher("/WEB-INF/view/admin/create.jsp").forward(request, response);
     }
 
-    public static void createGame(HttpServletRequest request, HttpServletResponse response)
+    public void createGame(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         Games newGame = new Games();
-
-
         // 1. Lấy Part từ input name="image"
         Part filePart = request.getPart("image");
 
         // 2. Lấy tên file gốc
         String fileName = filePart.getSubmittedFileName();
-
         if (fileName != null && !fileName.isEmpty()) {
-
             String uploadPath = request.getServletContext().getRealPath("/image_save");
-
             // Kiểm tra nếu thư mục chưa tồn tại thì tạo mới
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }
-
             // Ghi file
             filePart.write(uploadPath + File.separator + fileName);
-
             // Lưu vào DB đường dẫn tương đối để hiển thị trên JSP
             newGame.setImage("image_save/" + fileName);
         }
-
-
         newGame.setName(request.getParameter("name"));
         newGame.setDescription(request.getParameter("description"));
         newGame.setPrice(Double.parseDouble(request.getParameter("price")));
@@ -83,7 +74,7 @@ public class GameServices {
         response.sendRedirect(request.getContextPath() + "/home-admin");
     }
 
-    public static void renderFormUpdate(HttpServletRequest request, HttpServletResponse response)
+    public void renderFormUpdate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         List<Categories> categories = CATEGORY_DAO.getAllCategory();
         int id = Integer.parseInt(request.getParameter("id"));
@@ -98,7 +89,7 @@ public class GameServices {
         }
     }
 
-    public static void updateGame(HttpServletRequest request, HttpServletResponse response)
+    public void updateGame(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException{
         String id = request.getParameter("id");
 
@@ -143,14 +134,14 @@ public class GameServices {
         response.sendRedirect(request.getContextPath() + "/home-admin");
     }
 
-    public static void deleteGame(HttpServletRequest request, HttpServletResponse response)
+    public void deleteGame(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         String id = request.getParameter("id");
         GAME_DAO.delete(Integer.parseInt(id));
         response.sendRedirect(request.getContextPath() + "/home-admin");
     }
 
-    public static void searchGame(HttpServletRequest request, HttpServletResponse response)
+    public void searchGame(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         String keyword = request.getParameter("keyword");
 
