@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class AuthServices {
-    public static final AuthDAO authDAO = new AuthDAO();
+    public final AuthDAO authDAO = new AuthDAO();
 
-    public static void renderPageLogin(HttpServletRequest request, HttpServletResponse response)
+    public void renderPageLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String error = request.getParameter("error");
@@ -24,7 +24,7 @@ public class AuthServices {
         request.getRequestDispatcher("/WEB-INF/view/admin/login.jsp").forward(request, response);
     }
 
-    public static void renderPageUserLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void renderPageUserLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String error = request.getParameter("error");
         if ("true".equals(error)) {
             request.setAttribute("errorMessage", "Invalid username or password.");
@@ -32,11 +32,12 @@ public class AuthServices {
         request.getRequestDispatcher("/WEB-INF/view/user/user_login.jsp").forward(request, response);
     }
 
-    public static void renderPageUserRegistration(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void renderPageUserRegistration(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/view/user/user_register.jsp").forward(request, response);
     }
 
-    /*public static void handleAdminLoginn(HttpServletRequest request, HttpServletResponse response)
+    /* ...
+    public void handleAdminLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -50,9 +51,10 @@ public class AuthServices {
             request.setAttribute("errorMessage", "Sai tài khoản hoặc mật khẩu Admin!");
             request.getRequestDispatcher("/WEB-INF/view/admin/login.jsp").forward(request, response);
         }
-    }*/
+    }
+    ... */
 
-    public static void handleAdminLogin(HttpServletRequest request, HttpServletResponse response)
+    public void handleAdminLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -71,7 +73,7 @@ public class AuthServices {
         }
     }
 
-    public static void handleUserLogin(HttpServletRequest request, HttpServletResponse response)
+    public void handleUserLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -84,7 +86,7 @@ public class AuthServices {
             session.setAttribute("userRole", "USER");
 
             response.sendRedirect(request.getContextPath() + "/home-user/");
-        } else {;
+        } else {
             request.setAttribute("errorMessage", "Tài khoản hoặc mật khẩu không đúng!");
             request.getRequestDispatcher("/WEB-INF/view/user/user_login.jsp").forward(request, response);
         }
@@ -116,7 +118,9 @@ public class AuthServices {
             response.sendRedirect(request.getContextPath() + "/game-management/user/login?status=success");
         }
 
-        /*authDAO.registerUser(newUser);
-        response.sendRedirect(request.getContextPath() + "/game-management/user/login?status=success");*/
+        /* ...
+        authDAO.registerUser(newUser);
+        response.sendRedirect(request.getContextPath() + "/game-management/user/login?status=success");
+        ... */
     }
 }

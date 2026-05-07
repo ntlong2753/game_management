@@ -23,7 +23,7 @@ public class AuthDAO extends BaseDAO {
             statement.setString(5, user.getPassword());
             statement.setString(6, user.getRole());
 
-            int rowsAffected = statement.executeUpdate();
+            statement.executeUpdate();
     }
 
     public User loginUser(String username, String password) throws SQLException {

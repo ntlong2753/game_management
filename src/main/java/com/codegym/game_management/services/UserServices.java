@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserServices {
-    private static final GameDAO GAME_DAO = new GameDAO();
+    private final GameDAO GAME_DAO = new GameDAO();
 
     public UserServices() {
     }
 
-    public static void renderPageUser(HttpServletRequest request, HttpServletResponse response)
+    public void renderPageUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // 1. Gọi DAO lấy danh sách game
         List<Games> list;
@@ -31,7 +31,7 @@ public class UserServices {
         request.getRequestDispatcher("/WEB-INF/view/user/home_user.jsp").forward(request, response);
     }
 
-    public static void searchGameUser (HttpServletRequest request, HttpServletResponse response)
+    public void searchGameUser (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         String keyword = request.getParameter("keyword");
         List<Games> result = GAME_DAO.search(keyword);

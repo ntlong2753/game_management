@@ -12,13 +12,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @MultipartConfig(
-        fileSizeThreshold = 0,
         maxFileSize = 1024 * 1024 * 10,
         maxRequestSize = 1024 * 1024 * 100
 )
 @WebServlet(name = "homeAdmin", urlPatterns = "/home-admin/*")
 public class HomeAdminServlet extends HttpServlet {
-    private static GameServices gameServices = new GameServices();
+    private static final GameServices gameServices = new GameServices();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

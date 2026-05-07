@@ -20,10 +20,10 @@ public class Database {
             System.out.println("Connected to database successfully!");
         } catch (ClassNotFoundException e) {
             System.out.println("Driver not found!");
-            e.printStackTrace();
+
         } catch (Exception e) {
             System.out.println("Connection failed!");
-            e.printStackTrace();
+
             return null;
         }
         return connection;
