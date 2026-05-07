@@ -16,14 +16,15 @@ public class CategoryServices {
 
     }
 
-    public static void renderPageCategory(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+    public static void renderPageCategory(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, ServletException, IOException {
         List<Categories> categories = CATEGORY_DAO.getAllCategory();
         request.setAttribute("category", categories);
         request.getRequestDispatcher("/WEB-INF/view/category/category.jsp").forward(request, response);
     }
 
     public static void createCategory(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws IOException, SQLException {
         Categories newCategory = new Categories();
         newCategory.setName(request.getParameter("name"));
         CATEGORY_DAO.createCategory(

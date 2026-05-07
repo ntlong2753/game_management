@@ -19,7 +19,7 @@ public class UserServices {
     public static void renderPageUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // 1. Gọi DAO lấy danh sách game
-        List<Games> list = null;
+        List<Games> list;
         try {
             list = GAME_DAO.getAll();
         } catch (SQLException e) {
