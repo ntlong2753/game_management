@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 @WebServlet(name = "authController", urlPatterns = "/game-management/*")
 public class AuthServlet extends HttpServlet {
-    private AuthServices zauthServices = new AuthServices();
+    private AuthServices authServices = new AuthServices();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
